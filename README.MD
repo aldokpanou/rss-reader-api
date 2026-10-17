@@ -6,7 +6,7 @@ Projet d'apprentissage : l'objectif est de comprendre les concepts de Spring Boo
 
 ## Technologies
 
-- Java 17 ou 21
+- Java 21
 - Spring Boot (Spring Web)
 - [ROME](https://github.com/rometools/rome) 2.1.0 pour parser les flux RSS et Atom
 - Maven
@@ -79,7 +79,6 @@ src/main/java/kaktus/rss_reader_api/
 
 - La récupération du flux utilise `XmlReader(URL)`, qui peut échouer avec certains sites (pas de timeout, redirections limitées). Une version avec `HttpClient` est prévue si nécessaire.
 - Les erreurs sont gérées par un simple `try/catch` dans le contrôleur et renvoient un faux article avec un code 200.
-- Une valeur de `limit` négative n'est pas encore vérifiée.
 
 ## Prochaines étapes
 
