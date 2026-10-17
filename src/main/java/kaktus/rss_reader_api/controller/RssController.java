@@ -50,4 +50,21 @@ public class RssController {
         return rssService.getArticlesBySubject(subject, limit);
         
     }
+
+    @GetMapping ("rss/google-news")
+    public List<ArticleDto> getArticlesByGoogleNews(@RequestParam String subject, @RequestParam(defaultValue = "5") int limit) {
+
+        if (limit <= 1) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Limit must be greater than 1");
+        }
+
+        String googleNewsUrl = "https://news.google.com/rss/search?q=" + subject;
+
+        try {
+            return rssService.getArticles(googleNewsUrl, limit);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return List.of(new ArticleDto("Error", "", "Error fetching Google News feed", new Date()));
+        }
+    }
 }
