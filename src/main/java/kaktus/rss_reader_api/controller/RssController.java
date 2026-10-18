@@ -9,11 +9,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import kaktus.rss_reader_api.dto.ArticleDto;
 import kaktus.rss_reader_api.service.FeedCatalog;
 import kaktus.rss_reader_api.service.RssService;
 
 @RestController
+@Tag (name = "RSS Controller", description = "Endpoints for fetching RSS feeds and articles by subject")
 public class RssController {
 
     private final RssService rssService;
@@ -25,6 +28,7 @@ public class RssController {
         this.feedCatalog = feedCatalog;
     }
 
+    @Operation (summary = "Get RSS feed articles", description = "Fetches articles from the specified RSS feed URL with an optional limit on the number of articles.")
     @GetMapping("/rss")
     public List<ArticleDto> getRssFeed(@RequestParam String url, @RequestParam(defaultValue = "5") int limit) {
 
@@ -40,6 +44,7 @@ public class RssController {
         }
     }
 
+    @Operation (summary = "Get articles by subject", description = "Fetches articles from predefined RSS feeds based on the specified subject with an optional limit on the number of articles.")
     @GetMapping ("rss/subjects")
     public List<ArticleDto> getArticlesBySubject(@RequestParam String subject, @RequestParam(defaultValue = "5") int limit) {
 
@@ -51,6 +56,7 @@ public class RssController {
         
     }
 
+    @Operation (summary = "Get articles from Google News by subject", description = "Fetches articles from Google News based on the specified subject with an optional limit on the number of articles.")
     @GetMapping ("rss/google-news")
     public List<ArticleDto> getArticlesByGoogleNews(@RequestParam String subject, @RequestParam(defaultValue = "5") int limit) {
 
